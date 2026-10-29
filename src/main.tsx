@@ -6,11 +6,15 @@ import './styles/index.css'
 import App from './App.tsx'
 import './styles/fonts.css'
 import './styles/location-icons.css'
+import { setupAutoHideCursor } from './utils/autoHideCursor'
 
 // Send initial watchdog ping immediately — before React renders.
 // This ensures the Rust watchdog knows the WebView JS engine is alive
 // even if React component mounting fails.
 invoke('webview_ping').catch(() => {});
+
+// 遠隔操作後にマウスカーソルが表示されたまま残らないよう、無操作時は自動で非表示にする
+setupAutoHideCursor();
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
